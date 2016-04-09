@@ -1,0 +1,25 @@
+{
+  "name": "uturn",
+  "version": "0.0.1",
+  "description": "RxJS based MVVM for everything.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/hadashiA/uturn.git"
+  },
+  "keywords": [
+    "Rx",
+    "RxJS",
+    "ReactiveExtensions",
+    "MVVM"
+  ],
+  "author": "hadashiA",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hadashiA/uturn/issues"
+  },
+  "homepage": "https://github.com/hadashiA/uturn#readme"
+}
