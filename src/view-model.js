@@ -8,11 +8,11 @@ class ViewModel {
     }
   }
 
-  dispose() {
+  unsubscribe() {
     for (let k in this) {
       if (this.hasOwnProperty(k)) {
         if (typeof this[k].dispose === 'function') {
-          this[k].dispose()
+          this[k].unsubscribe()
         }
       }
     }

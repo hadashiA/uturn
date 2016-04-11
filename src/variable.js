@@ -36,8 +36,8 @@ class Variable {
     this.subject.complete()
   }
 
-  dispose() {
-    this.sourceDisposable.dispose()
+  unsubscribe() {
+    this.sourceDisposable.unsubscribe()
     this.subject.complete()
   }
 }
