@@ -1,5 +1,10 @@
 import { BehaviorSubject } from 'rxjs/subject/BehaviorSubject'
 
+class VariableProxy {
+  constructor(variable) {
+  }
+}
+
 class Variable {
   constructor(value, source) {
     this.subject = new BehaviorSubject(value)
@@ -36,6 +41,17 @@ class Variable {
     this.subject.complete()
   }
 
+  at(key) {
+    const o = this.subject.value
+    return new
+  }
+
+  push(item) {
+    const array = this.subject.value
+    array.push(item)
+    this.subject.next(array)
+  }
+
   unsubscribe() {
     this.sourceDisposable.unsubscribe()
     this.subject.complete()
@@ -43,4 +59,3 @@ class Variable {
 }
 
 export default Variable
-
