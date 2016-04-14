@@ -25,31 +25,31 @@ class TodoList extends VirtualDOMComponent {
       this.event('new-todo', 'keypress')
         .filter(e => e.which === 13)
         .map(e => e.target.value)
-        .subscribe(this.vm.create),
+        .subscribe(this.vm.create()),
 
       this.event('edit', 'keypress')
         .filter(e => e.which === 13)
-        .map(e => [id(e.target), { title: e.target.value }])
-        .subscribe(this.vm.update),
+        .map(e => [id(e.target), e.target.value])
+        .subscribe(this.vm.update()),
 
       this.event('todo', 'dblclick')
-        .map(e => [id(e.target), { editing: true }])
-        .subscribe(this.vm.update),
+        .map(e => id(e.target))
+        .subscribe(this.vm.editing(true)),
 
       Observable.merge(
         this.event('edit', 'blur'),
         this.event('edit', 'keydown')
           .filter(e => e.which === 27))
-        .map(e => [id(e.target), { editing: false }])
-        .subscribe(this.vm.update),
+        .map(e => id(e.target))
+        .subscribe(this.vm.editing(false)),
 
       this.event('toggle', 'change')
-        .map(e => [id(e.target), { completed: e.target.checked }])
-        .subscribe(this.vm.toggle),
+        .map(e => id(e.target))
+        .subscribe(this.vm.toggle()),
 
       this.event('destroy', 'click')
         .map(e => id(e.target))
-        .subscribe(this.vm.remove))
+        .subscribe(this.vm.remove()))
     
     this.bindDOM()
   }

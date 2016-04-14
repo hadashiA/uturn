@@ -21,30 +21,44 @@ class TodoListViewModel extends ViewModel {
       .toVariable(false)
   }
 
-  create(title) {
-    let todos = this.todos.value
-    todos.push({ title })
-    this.todos.value = todos
+  create() {
+    return title => {
+      let todos = this.todos.value
+      todos.push({ title })
+      this.todos.value = todos
+    }
   }
 
-  update(i, { title, editing, completed }) {
-    let todos = this.todos.value
-    if (title) {
+  update() {
+    return (i, title) => {
+      let todos = this.todos.value
       todos[i].title = title
+      this.todos.value = todos
     }
-    if (editing) {
-      todos[i].editing = editing
-    }
-    if (completed) {
-      todos[i].completed = completed
-    }
-    this.todos.value = todos
   }
 
-  remove(i) {
-    let todos = this.todos.value
-    todos.splice(1, 1)
-    this.todos.value = todos
+  editing(on) {
+    return i => {
+      let todos = this.todos.value
+      todos[i].editing = on
+      this.todos.value = todos
+    }
+  }
+  
+  toggle() {
+    return i => {
+      let todos = this.todos.value
+      todos[i].completed = !todos[i].completed
+      this.todos.value = todos
+    }
+  }
+
+  remove() {
+    return i => {
+      let todos = this.todos.value
+      todos.splice(1, 1)
+      this.todos.value = todos
+    }
   }
 }
 
