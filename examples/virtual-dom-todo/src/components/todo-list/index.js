@@ -1,7 +1,6 @@
 import { Observable} from 'rxjs/Observable'
 import h from 'virtual-dom/h'
-import subscriptions from '../../../../../src/composite-subscription'
-import VirtualDOMComponent from '../../../../../src/virtual-dom-component'
+import { VirtualDOMComponent } from '../../../../../src/virtual-dom-component'
 import TodoListViewModel from './view-model'
 
 function id(el) {
@@ -21,36 +20,44 @@ class TodoList extends VirtualDOMComponent {
 
     this.vm = new TodoListViewModel({ todos: [] })
 
-    this.subscription = subscriptions(
-      this.event('new-todo', 'keypress')
-        .filter(e => e.which === 13)
-        .map(e => e.target.value)
-        .subscribe(this.vm.create()),
+    this.on('keypress', '.new-todo')
+      .filter(e => e.which === 13)
+      .map(e => e.target.value)
+      .subscribe(this.vm.create())
+      .with(this.subscription)
 
-      this.event('edit', 'keypress')
-        .filter(e => e.which === 13)
-        .map(e => [id(e.target), e.target.value])
-        .subscribe(this.vm.update()),
+    this.on('keypress', '.edit')
+      .filter(e => e.which === 13)
+      .map(e => [id(e.target), e.target.value])
+      .subscribe(this.vm.update())
+      .with(this.subscription)
 
-      this.event('todo', 'dblclick')
-        .map(e => id(e.target))
-        .subscribe(this.vm.editing(true)),
+    this.on('dbclick', '.todo')
+      .map(e => id(e.target))
+      .subscribe(this.vm.editing(true))
+      .with(this.subscription)
 
-      Observable.merge(
-        this.event('edit', 'blur'),
-        this.event('edit', 'keydown')
-          .filter(e => e.which === 27))
-        .map(e => id(e.target))
-        .subscribe(this.vm.editing(false)),
+    this.on('keydown', '.edit')
+      .map(e => id(e.target))
+      .filter(e => e.which === 27)
+      .subscribe(this.vm.editing(false))
+      .with(this.subscription)
 
-      this.event('toggle', 'change')
-        .map(e => id(e.target))
-        .subscribe(this.vm.toggle()),
+    this.on('blur', '.edit')
+      .map(e => id(e.target))
+      .subscribe(this.vm.editing(false))
+      .with(this.subscription)
 
-      this.event('destroy', 'click')
-        .map(e => id(e.target))
-        .subscribe(this.vm.remove()))
-    
+    this.on('change', '.toggle')
+      .map(e => id(e.target))
+      .subscribe(this.vm.toggle())
+      .with(this.subscription)
+
+    this.on('click', '.destroy')
+      .map(e => id(e.target))
+      .subscribe(this.vm.remove())
+      .with(this.subscription)
+
     this.bindDOM()
   }
 
