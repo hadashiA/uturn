@@ -1,6 +1,6 @@
 {
   "name": "uturn",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "RxJS based MVVM for everything.",
   "main": "index.js",
   "jsnext:main": "index.mjs",
