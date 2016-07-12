@@ -5,10 +5,12 @@ import diff from 'virtual-dom/diff'
 import patch from 'virtual-dom/patch'
 import createElement from 'virtual-dom/create-element'
 
+import 'element-closest'
 import 'rxjs/add/observable/of'
 import 'rxjs/add/observable/fromEvent'
+import 'rxjs/add/operator/share'
 
-class Component {
+class DOMComponent {
   constructor(el) {
     this.el = el
     this.children = []
@@ -16,45 +18,37 @@ class Component {
     this.subscription = new Subscription
   }
 
-  on(eventName, simpleSelector) {
+  addChild(child) {
+    this.children.push(child)
+    child.parent = this
+    child.didMoveToParent && child.didMoveToParent(this)
+  }
+
+  on(eventName, selector) {
     if (!this.events[eventName]) {
       this.events[eventName] = Observable.fromEvent(this.el, eventName).share()
     }
 
-    if (simpleSelector) {
-      if (simpleSelector[0] === '#') {
-        const id = simpleSelector.substr(1)
-        return this.events[eventName].filter(e => {
-          let el = e.target
-          while (el) {
-            if (el.id === id) {
-              return true
-            }
-            el = el.parentNode
+    if (selector) {
+      return this.events[eventName]
+        .filter(e => {
+          const el = e.target
+          if (typeof selector === 'string') {
+            return el.closest(selector)
+          } else {
+            return el === selector
           }
-          return false
         })
-      } else if (simpleSelector[0] === '.') {
-        const className = simpleSelector.substr(1)
-        return this.events[eventName].filter(e => {
-          let el = e.target
-          while (el) {
-            if (el.classList && el.classList.contains(className)) {
-              return true
-            }
-            el = el.parentNode
-          }
-          return false
-        })
-      }
+    } else {
+      return this.events[eventName]
     }
-    return this.events[eventName]
   }
 
   dispose() {
     for (let child of this.children) {
       if (child.dispose) {
         child.dispose()
+        child.parent = null
       }
     }
     this.children = null
@@ -68,35 +62,42 @@ class Component {
   }
 }
 
-class VirtualDOMComponent extends Component {
-  render() {
-    return Observable.of(h('div'))
-  }
-
+class VirtualDOMComponent extends DOMComponent {
   bindDOM(bindElement) {
     let tree = null
     let node = null
 
-    if (!this.subscription) {
-      this.subscription = new Subscription
-    }
+    this.renderSubscription = this.render()
+      .subscribe(newTree => {
+        if (tree) {
+          const patches = diff(tree, newTree)
+          node = patch(node, patches)
+          tree = newTree
+        } else {
+          tree = newTree
+          node = createElement(tree)
+          const el = bindElement || this.el
+          el.innerText = ''
+          el.appendChild(node)
+        }
+      })
+  }
 
-    this.subscription.add(
-      this.render()
-        .subscribe(newTree => {
-          if (tree) {
-            const patches = diff(tree, newTree)
-            node = patch(node, patches)
-            tree = newTree
-          } else {
-            tree = newTree
-            node = createElement(tree)
-            const el = bindElement || this.el
-            el.innerText = ''
-            el.appendChild(node)
-          }
-        }))
+  unbindDOM() {
+    if (this.renderSubscriptino) {
+      this.renderSubscription.unsubscribe()
+      this.renderSubscription = null
+    }
+  }
+
+  render() {
+    return Observable.of(h('div'))
+  }
+
+  dispose() {
+    super.dispose()
+    this.unbindDOM()
   }
 }
 
-export { Component, VirtualDOMComponent }
+export { DOMComponent, VirtualDOMComponent }

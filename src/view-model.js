@@ -1,4 +1,5 @@
 import Variable from './variable'
+import './to-variable'
 
 class ViewModel {
   constructor(attrs={}) {

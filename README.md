@@ -1,4 +1,3 @@
 # uturn
-RxJS based MVVM for everything
 
-![diagram](./docs/diagram.jpg)
+RxJS based MVVM for your project
