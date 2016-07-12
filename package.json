@@ -2,13 +2,20 @@
   "name": "uturn",
   "version": "0.0.2",
   "description": "RxJS based MVVM for everything.",
-  "main": "index.js",
-  "jsnext:main": "index.mjs",
-  "browser": "index.browser.js",
+  "main": "dist/index.umd.js",
+  "files": [
+    "src",
+    "dist",
+    "README.md",
+    "package.json"
+  ],
+  "jsnext:main": "dist/index.es.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "node tools/build",
-    "version": "npm run build"
+    "build": "npm run build:umd && npm run build:es",
+    "build:umd": "rollup --config --format umd -o dist/index.umd.js",
+    "build:es": "rollup --config --format es6 -o dist/index.es.js",
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -33,11 +40,7 @@
     "virtual-dom": "^2.1.1"
   },
   "devDependencies": {
-    "babel-cli": "^6.10.1",
-    "babel-preset-es2015": "^6.6.0",
-    "babel-preset-es2015-rollup": "^1.1.1",
-    "del": "^2.2.1",
     "rollup": "^0.34.1",
-    "rollup-plugin-babel": "^2.6.1"
+    "rollup-plugin-buble": "^0.12.1"
   }
 }

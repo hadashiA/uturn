@@ -45,12 +45,12 @@ class DOMComponent {
   }
 
   dispose() {
-    for (let child of this.children) {
+    this.children.forEach(child => {
       if (child.dispose) {
         child.dispose()
         child.parent = null
       }
-    }
+    })
     this.children = null
 
     if (this.vm) {

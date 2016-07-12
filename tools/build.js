@@ -2,11 +2,12 @@ const fs     = require('fs')
 const del    = require('del')
 const rollup = require('rollup')
 const babel  = require('rollup-plugin-babel')
+const uglify = require('rollup-plugin-uglify')
 const pkg    = require('../package.json')
 
 const bundles = [
   {
-    format: 'cjs', ext: '.js', plugins: [],
+    format: 'es6', ext: '.es.js', plugins: [],
     babelPresets: [],
     babelPlugins: [
       'transform-es2015-destructuring',
@@ -15,19 +16,17 @@ const bundles = [
     ]
   },
   {
-    format: 'es6', ext: '.mjs', plugins: [],
-    babelPresets: [],
-    babelPlugins: [
-      'transform-es2015-destructuring',
-      'transform-es2015-function-name',
-      'transform-es2015-parameters'
-    ]
-  },
-  {
-    format: 'cjs', ext: '.browser.js',
-    plugins: [],
+    format: 'umd', ext: '.umd.js', plugins: [],
     babelPresets: ['es2015-rollup'],
-    babelPlugins: []
+    babelPlugins: [],
+    moduleName: 'uturn'
+  },
+  {
+    format: 'umd', ext: '.umd.min.js', plugins: [uglify()],
+    babelPresets: ['es2015-rollup'],
+    babelPlugins: [],
+    moduleName: 'uturn',
+    minify: true
   }
 ]
 
@@ -52,7 +51,7 @@ for (const config of bundles) {
       ].concat(config.plugins)
     }))
     .then(bundle => bundle.write({
-      dest: `dist/${config.moduleName || 'main'}${config.ext}`,
+      dest: `dist/${config.moduleName || 'index'}${config.ext}`,
       format: config.format,
       sourceMap: !config.minify,
       moduleName: config.moduleName

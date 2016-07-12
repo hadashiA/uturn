@@ -4,7 +4,7 @@ import './to-variable'
 class ViewModel {
   constructor(attrs={}) {
     this.keys = Object.keys(attrs)
-    for (let key of this.keys) {
+    for (const key in attrs) {
       this[key] = new Variable(attrs[key])
     }
   }
