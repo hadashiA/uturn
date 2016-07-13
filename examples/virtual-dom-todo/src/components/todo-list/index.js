@@ -1,6 +1,6 @@
 import { Observable} from 'rxjs/Observable'
 import h from 'virtual-dom/h'
-import { VirtualDOMComponent } from '../../../../../src/virtual-dom-component'
+import { VirtualDOMComponent } from 'uturn'
 import TodoListViewModel from './view-model'
 
 function id(el) {

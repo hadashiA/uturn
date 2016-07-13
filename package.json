@@ -3,13 +3,13 @@
   "version": "0.0.1",
   "description": "Provides a ViewModel that is based on RxJS",
   "main": "dist/index.umd.js",
+  "jsnext:main": "dist/index.es.js",
   "files": [
     "src",
     "dist",
     "README.md",
     "package.json"
   ],
-  "jsnext:main": "dist/index.es.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npm run build:umd && npm run build:es",

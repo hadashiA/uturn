@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs/Observable'
 import { Subject } from 'rxjs/Subject'
-import ViewModel from '../../view-model'
+import { ViewModel } from 'uturn'
 
 class TodoListViewModel extends ViewModel {
   constructor({ todos = [] } = {}) {

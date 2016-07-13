@@ -1,5 +1,16 @@
-import '../../../src/composite-subscription'
-import '../../../src/to-variable'
-import TodoList from './components/todo-list'
+import TodoList from './components/todo-list/index'
 
 const todoList = new TodoList(document.body)
+
+
+
+
+
+
+
+
+
+
+
+
+
