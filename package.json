@@ -1,7 +1,7 @@
 {
   "name": "uturn",
   "version": "0.0.1",
-  "description": "Provides a ViewModel that is based on RxJS"
+  "description": "Provides a ViewModel that is based on RxJS",
   "main": "dist/index.umd.js",
   "files": [
     "src",
