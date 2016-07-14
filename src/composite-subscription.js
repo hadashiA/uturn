@@ -1,4 +1,4 @@
-import { Subscription } from 'rxjs/Subscription'
+import { Subscription } from 'rxjs-es/Subscription'
 
 Subscription.prototype.with = function(subscription) {
   subscription.add(this)

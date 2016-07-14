@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs/Observable'
+import { Observable } from 'rxjs-es/Observable'
 import Variable from './variable'
 
 function toVariable(initialValue) {

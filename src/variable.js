@@ -1,4 +1,4 @@
-import { BehaviorSubject } from 'rxjs/BehaviorSubject'
+import { BehaviorSubject } from 'rxjs-es/BehaviorSubject'
 
 class Variable {
   constructor(value, source) {

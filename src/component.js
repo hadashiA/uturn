@@ -1,5 +1,5 @@
-import { Observable } from 'rxjs/Observable'
-import { Subscription } from 'rxjs/Subscription'
+import { Observable } from 'rxjs-es/Observable'
+import { Subscription } from 'rxjs-es/Subscription'
 import h from 'virtual-dom/h'
 import diff from 'virtual-dom/diff'
 import patch from 'virtual-dom/patch'
@@ -7,9 +7,9 @@ import createElement from 'virtual-dom/create-element'
 
 import './composite-subscription'
 import 'element-closest'
-import 'rxjs/add/observable/of'
-import 'rxjs/add/observable/fromEvent'
-import 'rxjs/add/operator/share'
+import 'rxjs-es/add/observable/of'
+import 'rxjs-es/add/observable/fromEvent'
+import 'rxjs-es/add/operator/share'
 
 class DOMComponent {
   constructor(el) {
