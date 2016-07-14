@@ -78,8 +78,7 @@ class VirtualDOMComponent extends DOMComponent {
           tree = newTree
           node = createElement(tree)
           const el = bindElement || this.el
-          el.innerText = ''
-          el.appendChild(node)
+          el.innerHTML = node
         }
       })
   }
