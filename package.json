@@ -1,6 +1,6 @@
 {
   "name": "uturn",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Provides a ViewModel that is based on RxJS",
   "main": "dist/index.umd.js",
   "jsnext:main": "dist/index.es.js",
