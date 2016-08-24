@@ -5,5 +5,6 @@ import Variable from './variable'
 export {
   DOMComponent,
   VirtualDOMComponent,
-  ViewModel
+  ViewModel,
+  Variable
 }
